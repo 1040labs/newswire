@@ -44,28 +44,32 @@ def fetch_whitehouse_news():
         if response.status_code == 200:
             soup = BeautifulSoup(response.text, "html.parser")
             articles = []
-            items = soup.select(".news-item__title a")
-            
+            # Prefer modern WP block titles, then fall back
+            items = soup.select(".wp-block-post-title a")
             if not items:
-                items = soup.select("article h2 a") or soup.select("article h3 a")
-                
+                items = soup.select("article h2 a, article h3 a, h2 a")
             if not items:
-                items = [a for a in soup.find_all("a", href=True) if "/briefing-room/" in a["href"] or "/releases/" in a["href"]]
+                items = [a for a in soup.find_all("a", href=True)
+                         if any(p in a.get("href", "") for p in ("/releases/", "/briefings-statements/", "/briefing-room/"))]
 
             for item in items[:10]:
                 title = item.get_text(strip=True)
                 link = item.get("href", "")
-                
-                if link and not link.startswith("http"):
+                if not title or not link:
+                    continue
+                if not link.startswith("http"):
                     link = f"https://www.whitehouse.gov{link}"
-                
-                if title and link and not any(a["link"] == link for a in articles):
-                    articles.append({
-                        "title": title,
-                        "link": link,
-                        "published": "",
-                        "source": "White House"
-                    })
+                # Skip generic/nav links
+                if title.lower() in ("releases", "news", "briefings", "statements"):
+                    continue
+                if any(a["link"] == link for a in articles):
+                    continue
+                articles.append({
+                    "title": title,
+                    "link": link,
+                    "published": "",
+                    "source": "White House"
+                })
             return articles
         else:
             print(f"White House scrape failed with status: {response.status_code}")
@@ -103,8 +107,8 @@ def fetch_kernel_news():
     return articles
 
 def fetch_9to5linux_news():
-    """Fetch top stories from 9to5Linux."""
-    feed_url = "https://9to5linux.com/feed"
+    """Fetch top stories from 9to5Linux (via FeedBurner mirror; direct feed is Cloudflare-protected)."""
+    feed_url = "https://feeds.feedburner.com/9to5linux"
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
     }
