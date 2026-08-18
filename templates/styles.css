@@ -1,0 +1,158 @@
+/* News Aggregator Styles */
+
+:root {
+    --bg-color: #0f1419;
+    --surface-color: #1a2332;
+    --surface-hover: #243044;
+    --text-primary: #e7e9ea;
+    --text-secondary: #8b98a5;
+    --accent: #1d9bf0;
+    --accent-hover: #1a8cd8;
+    --border-color: #2f3336;
+    --bbc: #bb1919;
+    --hn: #ff6600;
+    --wh: #002868;
+    --oann: #c41e3a;
+    --kernel: #333333;
+    --linux: #4a90d9;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    line-height: 1.6;
+    padding: 2rem 1rem;
+    max-width: 900px;
+    margin: 0 auto;
+    min-height: 100vh;
+}
+
+h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.02em;
+}
+
+h1 + p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid var(--border-color);
+    margin: 2rem 0;
+}
+
+h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Source-specific accent colors */
+h2::before {
+    content: "";
+    display: inline-block;
+    width: 4px;
+    height: 1.1em;
+    border-radius: 2px;
+    background: var(--accent);
+}
+
+/* Individual source colors via adjacent sibling or section targeting */
+body > h2:nth-of-type(1)::before { background: var(--bbc); }      /* BBC */
+body > h2:nth-of-type(2)::before { background: var(--hn); }       /* Hacker News */
+body > h2:nth-of-type(3)::before { background: var(--wh); }       /* White House */
+body > h2:nth-of-type(4)::before { background: var(--oann); }     /* OANN */
+body > h2:nth-of-type(5)::before { background: var(--kernel); }   /* Kernel.org */
+body > h2:nth-of-type(6)::before { background: var(--linux); }    /* 9to5Linux */
+
+ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+li {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 0.85rem 1.1rem;
+    transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+
+li:hover {
+    background: var(--surface-hover);
+    border-color: #3d4450;
+    transform: translateY(-1px);
+}
+
+li a {
+    color: var(--text-primary);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1rem;
+    display: block;
+    transition: color 0.15s ease;
+}
+
+li a:hover {
+    color: var(--accent);
+}
+
+li small {
+    display: block;
+    margin-top: 0.35rem;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+}
+
+/* Empty state when no articles match */
+ul:empty::after {
+    content: "No articles available";
+    color: var(--text-secondary);
+    font-style: italic;
+    font-size: 0.9rem;
+    display: block;
+    padding: 0.75rem 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    body {
+        padding: 1.25rem 0.75rem;
+    }
+
+    h1 {
+        font-size: 1.6rem;
+    }
+
+    h2 {
+        font-size: 1.1rem;
+    }
+
+    li {
+        padding: 0.75rem 0.9rem;
+    }
+}
+
+/* Subtle focus styles for accessibility */
+a:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 2px;
+}

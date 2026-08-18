@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NewsWire</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>My News Aggregator</h1>
+    <p>Last updated: {{ last_updated }}</p>
+
+    <hr>
+
+    <!-- 1. BBC News Section -->
+    <h2>BBC News</h2>
+    <ul>
+    {% for article in articles %}
+        {% if article.source == "BBC News" %}
+        <li>
+            <a href="{{ article.link }}" target="_blank">{{ article.title }}</a>
+            {% if article.published %}<br><small>{{ article.published }}</small>{% endif %}
+        </li>
+        {% endif %}
+    {% endfor %}
+    </ul>
+
+    <hr>
+
+    <!-- 2. Hacker News Section -->
+    <h2>Hacker News</h2>
+    <ul>
+    {% for article in articles %}
+        {% if article.source == "Hacker News" %}
+        <li>
+            <a href="{{ article.link }}" target="_blank">{{ article.title }}</a>
+        </li>
+        {% endif %}
+    {% endfor %}
+    </ul>
+
+    <hr>
+
+    <!-- 3. White House Section -->
+    <h2>White House News</h2>
+    <ul>
+    {% for article in articles %}
+        {% if article.source == "White House" %}
+        <li>
+            <a href="{{ article.link }}" target="_blank">{{ article.title }}</a>
+        </li>
+        {% endif %}
+    {% endfor %}
+    </ul>
+
+    <hr>
+
+    <!-- 4. OANN Section -->
+    <h2>OANN</h2>
+    <ul>
+    {% for article in articles %}
+        {% if article.source == "OANN" %}
+        <li>
+            <a href="{{ article.link }}" target="_blank">{{ article.title }}</a>
+            {% if article.published %}<br><small>{{ article.published }}</small>{% endif %}
+        </li>
+        {% endif %}
+    {% endfor %}
+    </ul>
+
+    <hr>
+
+    <!-- 5. Kernel.org Section -->
+    <h2>Kernel.org Releases</h2>
+    <ul>
+    {% for article in articles %}
+        {% if article.source == "Kernel.org" %}
+        <li>
+            <a href="{{ article.link }}" target="_blank">{{ article.title }}</a>
+            {% if article.published %}<br><small>{{ article.published }}</small>{% endif %}
+        </li>
+        {% endif %}
+    {% endfor %}
+    </ul>
+
+    <hr>
+
+    <!-- 6. 9to5Linux Section -->
+    <h2>9to5Linux</h2>
+    <ul>
+    {% for article in articles %}
+        {% if article.source == "9to5Linux" %}
+        <li>
+            <a href="{{ article.link }}" target="_blank">{{ article.title }}</a>
+            {% if article.published %}<br><small>{{ article.published }}</small>{% endif %}
+        </li>
+        {% endif %}
+    {% endfor %}
+    </ul>
+
+</body>
+</html>
