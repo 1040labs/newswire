@@ -3,6 +3,7 @@ import feedparser
 import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
+from zoneinfo import ZoneInfo
 
 app = Flask(__name__)
 
@@ -168,7 +169,7 @@ def index():
     )
     
     # Track the last updated time
-    last_updated = datetime.now().strftime("%B %d, %Y at %I:%M %p UTC")
+    last_updated = datetime.now(ZoneInfo("America/New_York")).strftime("%B %d, %Y at %I:%M %p EDT")
     return render_template("index.html", articles=all_articles, last_updated=last_updated)
 
 if __name__ == "__main__":
