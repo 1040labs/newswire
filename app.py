@@ -33,6 +33,19 @@ def scrape_hacker_news():
         })
     return articles
 
+def fetch_theblaze_news():
+    """Fetch news articles from the Blaze"""
+    feed = feedparser.parse("https://www.theblaze.com/feeds/feed.rss")
+    articles = []
+    for entry in feed.entries[:10]:
+        articles.append({
+            "title": entry.title,
+            "link": entry.link,
+            "published": entry.get("published", ""),
+            "source": "The Blaze"
+        })
+    return articles    
+
 def fetch_whitehouse_news():
     """Scrape top stories directly from the official White House News HTML page."""
     url = "https://www.whitehouse.gov/news/"
@@ -141,6 +154,7 @@ def index():
     oann_articles = fetch_oann_news()
     kernel_articles = fetch_kernel_news()
     linux_articles = fetch_9to5linux_news()
+    blaze_articles = fetch_theblaze_news()
     
     # Merge them all into one flat list
     all_articles = (
@@ -149,7 +163,8 @@ def index():
         wh_articles + 
         oann_articles + 
         kernel_articles + 
-        linux_articles
+        linux_articles +
+        blaze_articles
     )
     
     # Track the last updated time

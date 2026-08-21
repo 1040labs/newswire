@@ -26,6 +26,21 @@
     </ul>
 
     <hr>
+    
+    <!--Blaze Media -->
+    <h2>Blaze Media</h2>
+    <ul>
+    {% for article in articles %}
+        {% if article.source == "The Blaze" %}
+        <li>
+            <a href="{{ article.link }}" target="_blank">{{ article.title }}</a>
+            {% if article.published %}<br><small>{{ article.published }}</small>{% endif %}
+        </li>
+        {% endif %}
+    {% endfor %}    
+    </ul>
+    <hr>
+
 
     <!-- 2. Hacker News Section -->
     <h2>Hacker News</h2>
